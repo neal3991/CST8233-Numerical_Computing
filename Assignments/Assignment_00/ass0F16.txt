@@ -1,0 +1,60 @@
+	enum{ RUNNING = 1 };	
+	
+	struct Point
+	{
+		int x, y;
+	};
+
+	struct Line
+	{
+		Point start;
+		Point end;
+	};
+
+	struct GraphicElement
+	{
+		enum{ SIZE = 256 };
+		unsigned int numLines;
+		Line* pLines;
+		char name[SIZE];
+	};
+
+	typedef struct 
+	{
+		unsigned int numGraphicElements;
+		GraphicElement* pElements;
+	}VectorGraphic;
+
+	void InitVectorGraphic(VectorGraphic*);
+	void AddGraphicElement(VectorGraphic*);
+	void ReportVectorGraphic(VectorGraphic*);
+	void CleanUpVectorGraphic(VectorGraphic*);
+
+	VectorGraphic Image;
+
+
+	int main()
+	{
+		char response;
+		InitVectorGraphic(&Image);
+
+		while (RUNNING)
+		{
+			printf("\nPlease select an option:\n");
+			printf("1. Add a Graphic Element\n");
+			printf("2. List the Graphic Elements\n");
+			printf("q. Quit\n");
+			printf("CHOICE: ");
+			fflush(stdin);
+			scanf("%c", &response);
+
+			switch (response)
+			{
+			case '1':AddGraphicElement(&Image); break;
+			case '2':ReportVectorGraphic(&Image); break;
+			case 'q':CleanUpVectorGraphic(&Image); return 0;
+			default:printf("Please enter a valid option\n");
+			}
+			printf("\n");
+		}
+	}
